@@ -5,7 +5,7 @@ import 'dotenv/config'
 
 const route = express.Router();
 
-route.post('/login', async(req,res)=>{
+route.post('/', async(req,res)=>{
     let {name , password} = req.body;
     //adatok ellenőrzése
     if( name === undefined || password === undefined){
