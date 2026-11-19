@@ -6,7 +6,7 @@ const dbConfig = {
     user: process.env.DB_USER ?? "user",
     database: process.env.DB_DATABASE ?? "auth",
     port: Number(process.env.DB_PORT) ?? "3307",
-    datestring : true
+    dateStrings : true
 }
 
 

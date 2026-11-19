@@ -12,12 +12,12 @@ route.post('/login', async(req,res)=>{
         return res.status(401).json({ error: "hiányzó adatok"});
     }
         // a kapot adatok kiírása az adatbázisba
-        let passwordHash = bcrypt.hash(password, 10)
-    const sql =  `INSERT INTO 'users' ('userid', 'username', 'password, role') VALUES (NULL, ?, ?, 'user')`
+    const passwordHash = await bcrypt.hash(password, 10);
+    const sql =  `INSERT INTO users (userid, username, password, role) VALUES (NULL, ?, ?, user)`
 try{
-    const [result] = await pool.exec(sql, [name, password]);
+    const [result] = await pool.execute(sql, [name, passwordHash]);
     
-}   catch{
+}   catch (error){
     
     return res.status(500).json({ succes: false,  error: "Létrehozás sikertelen! "})
 }

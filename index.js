@@ -9,7 +9,7 @@ import usersRoute from './routes/users.js'
 const app = express();
 const port = Number(process.env.APP_PORT) || 3000;
 
-app.use(express.json());
+app.use(express.json()); // a body tartalmát JSON formátummá alakítja
 
 app.use('/api/login', loginRoute);
 app.use('/api/registration', registrationRoute);
