@@ -1,28 +1,26 @@
-import express from 'express'
-import pool from '../database/db.js'
-import bcrypt from 'bcrypt'
-import 'dotenv/config'
+import express from "express";
+import pool from "../utils/db.js";
+import bcrypt from "bcrypt";
 
-const route = express.Router();
+const router = express.Router();
 
-route.post('/', async(req,res)=>{
-    let {name , password} = req.body;
+router.post("/",async(req,res)=>{
+    let{name, password}= req.body;
     //adatok ellenőrzése
-    if( name === undefined || password === undefined){
-        return res.status(401).json({ error: "hiányzó adatok"});
+    if(name===undefined||password===undefined){
+        return res.status(401).json({error:"nincs vagy a jelszó vagy a password megadva"})
     }
-        // a kapot adatok kiírása az adatbázisba
-    const passwordHash = await bcrypt.hash(password, 10);
-    const sql =  `INSERT INTO users (userid, username, password, role) VALUES (NULL, ?, ?, user)`
+    // kapott adatok kiíratása
+    let passwordhash=await bcrypt.hash(password,10);
+    console.log(passwordhash);
+    let sql=`INSERT INTO users (userid, username, password, role) VALUES (NULL, ?, ?, 'user');`
 try{
-    const [result] = await pool.execute(sql, [name, passwordHash]);
-    
-}   catch (error){
-    
-    return res.status(500).json({ succes: false,  error: "Létrehozás sikertelen! "})
+const [result]= await pool.execute(sql,[name, passwordhash]);
 }
-    
-  return res.status(201).json({message : "Regisztráció"})
+catch{
+    return res.status(500).json({success:false, error:"létrehozás sikertelen"})
+}
+    return res.status(201).json({message:"sikeres regisztrálás"});
 })
 
-export default route
+export default router;

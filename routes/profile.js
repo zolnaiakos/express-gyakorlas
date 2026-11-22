@@ -1,11 +1,15 @@
-import express from 'express'
+import express, { application } from "express";
+import hitelesites from "../middleware/hitelesits.js";
 
-const route = express.Router();
+const router = express.Router();
 
-route.post('/', async (req, res) => {
-    return res.status(200).json({
-        message: "Profil megtekintés"
-    });
-});
+router.post("/",(req,res)=>{
+    return res.status(201).json({message:"profil megtekintése"});
+})
 
-export default route;
+router.get("/",hitelesites,(req,res)=>{
+    return res.status(200).json({message:`Üdv ${req.user.username}, szerepköröd:${req.user.role}`
+    })
+})
+
+export default router;

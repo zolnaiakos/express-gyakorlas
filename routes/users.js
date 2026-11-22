@@ -1,14 +1,11 @@
-import express from 'express'
+import express from "express";
+import hitelesites from "../middleware/hitelesits.js";
 
 
-const route = express.Router();
+const router = express.Router();
 
-route.delete('/user/:id', (req,res)=>{
-    let id = req.params.id;
-    if(parseInt(Number(id)>0)){
-        return res.status(401).json({error: "Érvénytelen azonosító"})
-    }
-    return res.status(201).json({message : `${id} "azonosítojú felhasználó törlése`})
+router.get("/",hitelesites, (req,res)=>{
+    return res.status(200).json({message:"felhasználók"});
 })
 
-export default route
+export default router;

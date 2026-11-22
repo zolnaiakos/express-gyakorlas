@@ -9,6 +9,8 @@ import usersRoute from './routes/users.js'
 const app = express();
 const port = Number(process.env.APP_PORT) || 3000;
 
+export const allRoles = ["admin", "user"]
+
 app.use(express.json()); // a body tartalmát JSON formátummá alakítja
 
 app.use('/api/login', loginRoute);
